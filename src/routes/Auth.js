@@ -19,7 +19,7 @@ const Auth = () => {
 
   return (
     <div>
-      <form>
+      <form onSubmit={onSubmit}>
         <input
           name="email"
           onChange={onChange}
@@ -36,7 +36,7 @@ const Auth = () => {
           placeholder="Password"
           required
         />
-        <input type="submit" value="Lon in" onSubmit={onSubmit} />
+        <input type="submit" value="Lon in" />
       </form>
       <div>
         <button>Continue with Google</button>
