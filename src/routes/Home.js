@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { dbService } from '../fbase';
 
-const Home = () => {
+const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState('');
   const [nweets, setNweets] = useState([]);
 
-  const getNweets = async () => {
-    // nweets 폴더에서 데이터 가져오기
-    const dbNweets = await dbService.collection('nweets').get();
-
-    dbNweets.forEach((document) => {
-      const newNweet = {
-        ...document.data(),
-        id: document.id,
-      };
-      setNweets((prev) => [newNweet, ...prev]);
-    });
-  };
   useEffect(() => {
-    getNweets();
+    // onSnapshot => database에 변경이 일어나면 실시간으로 알려줌
+    dbService
+      .collection('nweets')
+      .orderBy('createdAt', 'desc')
+      .onSnapshot((snapshot) => {
+        // 왜 ({}) 이렇게 쓰는지 잘 모르겠음 {} 이렇게만 쓰면 오류남
+        const nweetArray = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setNweets(nweetArray);
+      });
   }, []);
 
   const onSubmit = async (e) => {
@@ -26,8 +25,9 @@ const Home = () => {
     // collection: 폴더, document: 파일
     // nweets폴더에 {nweet, createdAt} 추가
     await dbService.collection('nweets').add({
-      nweet,
+      text: nweet,
       createdAt: Date.now(),
+      creatorId: userObj.uid,
     });
     setNweet('');
   };
@@ -53,7 +53,7 @@ const Home = () => {
       <section>
         <ul>
           {nweets.map((nweet) => (
-            <li key={nweet.id}>{nweet.nweet}</li>
+            <li key={nweet.id}>{nweet.text}</li>
           ))}
         </ul>
       </section>
