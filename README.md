@@ -24,3 +24,45 @@ useEffect(() => {
     });
 }, []);
 ```
+
+## 익숙하지 않은 것
+
+### 4. File Upload
+
+```jsx
+<input type="file" accept="image/*" onChange={onFileChange} />;
+
+const onFileChange = (e) => {
+  const { files } = e.target;
+  const theFile = files[0];
+  // FileReader 사용
+  const reader = new FileReader();
+  reader.onloadend = (finishedEvent) => {
+    const { result } = finishedEvent.currentTarget;
+    setImageSrc(result);
+  };
+  reader.readAsDataURL(theFile);
+};
+
+const onSubmit = async (e) => {
+  e.preventDefault();
+  let imageUrl = '';
+  if (imageSrc !== '') {
+    // ref().child()
+    const imageRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+    // putString()
+    const response = await imageRef.putString(imageSrc, 'data_url');
+    // getDownloadURL()
+    imageUrl = await response.ref.getDownloadURL();
+  }
+  const nweetObj = {
+    text: nweet,
+    createdAt: Date.now(),
+    creatorId: userObj.uid,
+    imageUrl,
+  };
+  await dbService.collection('nweets').add(nweetObj);
+  setNweet('');
+  setImageSrc('');
+};
+```
