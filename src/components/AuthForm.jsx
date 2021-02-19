@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
 import { authService, firebaseInstance } from '../fbase';
+import styled from 'styled-components';
+
+const Input = styled.input`
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+`;
 
 const AuthForm = () => {
   const [email, setEmail] = useState('');
@@ -44,7 +53,9 @@ const AuthForm = () => {
     <section>
       <div>
         <form onSubmit={onSubmit}>
-          <input
+          <label htmlFor="email">email</label>
+          <Input
+            id="email"
             name="email"
             onChange={onChange}
             value={email}
@@ -52,7 +63,9 @@ const AuthForm = () => {
             placeholder="Email"
             required
           />
-          <input
+          <label htmlFor="password">password</label>
+          <Input
+            id="password"
             name="password"
             onChange={onChange}
             value={password}
@@ -60,10 +73,9 @@ const AuthForm = () => {
             placeholder="Password"
             required
           />
-          <input
-            type="submit"
-            value={newAccount ? 'Create Account' : 'Sign In'}
-          />
+          <button type="submit">
+            {newAccount ? 'Create Account' : 'Sign In'}
+          </button>
         </form>
       </div>
       <div>

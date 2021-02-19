@@ -1,0 +1,107 @@
+* {
+  margin: 0;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  background: #edf2ff;
+}
+
+#root {
+  width: 760px;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  padding-top: 5rem;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+button {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 0.4rem;
+  cursor: pointer;
+}
+
+button.edit-btn {
+  display: inline-block;
+  width: inherit;
+}
+
+.nweet-form input[type='text'] {
+  display: inline-block;
+  width: 80%;
+}
+
+.edit-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+
+.edit-form input {
+  width: inherit;
+  margin-bottom: 0;
+}
+
+.edit-form button {
+  margin-bottom: 0;
+  padding: 0.5rem 0.6rem;
+}
+
+button.nweet-btn {
+  width: 20%;
+  padding: 0.5rem 0.6rem;
+}
+
+li.nweet-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+input {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+}
+
+nav {
+  margin-bottom: 2rem;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}

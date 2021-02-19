@@ -8,6 +8,9 @@ const NweetFactory = ({ userObj }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (nweet === '') {
+      return;
+    }
     // collection: 폴더, document: 파일
     // nweets폴더에 nweet 추가
     let imageUrl = '';
@@ -45,7 +48,7 @@ const NweetFactory = ({ userObj }) => {
   const onClearImage = () => setImageSrc('');
   return (
     <section>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="nweet-form">
         <input
           name="text"
           value={nweet}
@@ -54,8 +57,10 @@ const NweetFactory = ({ userObj }) => {
           placeholder="What's on your mind?"
           maxLength={120}
         />
+        <button className="nweet-btn" type="submit">
+          Nweet!
+        </button>
         <input type="file" accept="image/*" onChange={onFileChange} />
-        <input type="submit" value="Nweet" />
       </form>
       <img src={imageSrc} alt="photo" width="50px" />
       <button type="button" onClick={onClearImage}>

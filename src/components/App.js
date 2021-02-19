@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AppRouter from './Router';
 import { authService } from '../fbase';
+import '../../src/style.css';
 
 const App = () => {
   const [init, setInit] = useState(false);
@@ -33,6 +34,7 @@ const App = () => {
 
   return (
     <div>
+      <h1>Welcome to Nwitter</h1>
       {init ? (
         <AppRouter
           isLoggedIn={Boolean(userObj)}
