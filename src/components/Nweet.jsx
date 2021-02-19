@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { dbService } from '../fbase';
+import { dbService, storageService } from '../fbase';
 
 const Nweet = ({ nweetObj, isOwner }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newText, setNewText] = useState(nweetObj.text);
   const PATH = `nweets/${nweetObj.id}`;
 
-  const onDelete = () => {
+  const onDelete = async () => {
     const ok = window.confirm('are you sure delete this nweet?');
     if (ok) {
-      dbService.doc(PATH).delete();
+      // Firestore에서 삭제
+      await dbService.doc(PATH).delete();
+      // Storage에서 삭제
+      await storageService.refFromURL(nweetObj.imageUrl).delete();
     }
   };
 
