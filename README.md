@@ -2,6 +2,36 @@
 
 [https://nomadcoders.co/nwitter](https://nomadcoders.co/nwitter)
 
+## 중요한 것
+
+### 5.2 Update Profile Bugfix
+
+- 크기가 큰 object의 상태가 변경되었을 때, react가 잘 알아차리지 못할 수 있다. (필요한 기능만 가져와서 object를 새로 정의하자.)
+
+```jsx
+useEffect(() => {
+  authService.onAuthStateChanged((user) => {
+    if (user) {
+      setUserObj({
+        displayName: user.displayName,
+        uid: user.uid,
+        updateProfile: (args) => user.updateProfile(args),
+      });
+    }
+    setInit(true);
+  });
+}, []);
+
+const refreshUser = () => {
+  const user = authService.currentUser;
+  setUserObj({
+    displayName: user.displayName,
+    uid: user.uid,
+    updateProfile: (args) => user.updateProfile(args),
+  });
+};
+```
+
 ## 이해 안되는 것
 
 ### 3.3 Realtime Nweets
