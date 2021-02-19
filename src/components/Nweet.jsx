@@ -42,6 +42,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
       ) : (
         <>
           <li>{nweetObj.text}</li>
+          {nweetObj.imageUrl && <img src={nweetObj.imageUrl} width="50px" />}
           {isOwner && (
             <>
               <button onClick={onToggleEdit}>Edit</button>

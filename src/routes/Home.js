@@ -26,16 +26,22 @@ const Home = ({ userObj }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     // collection: 폴더, document: 파일
-    // nweets폴더에 {nweet, createdAt} 추가
-    // await dbService.collection('nweets').add({
-    //   text: nweet,
-    //   createdAt: Date.now(),
-    //   creatorId: userObj.uid,
-    // });
-    // setNweet('');
-    const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
-    const response = await fileRef.putString(imageSrc, 'data_url');
-    console.log(response);
+    // nweets폴더에 nweet 추가
+    let imageUrl = '';
+    if (imageSrc !== '') {
+      const imageRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+      const response = await imageRef.putString(imageSrc, 'data_url');
+      imageUrl = await response.ref.getDownloadURL();
+    }
+    const nweetObj = {
+      text: nweet,
+      createdAt: Date.now(),
+      creatorId: userObj.uid,
+      imageUrl,
+    };
+    await dbService.collection('nweets').add(nweetObj);
+    setNweet('');
+    setImageSrc('');
   };
   const onChange = (e) => {
     const { value } = e.target;
