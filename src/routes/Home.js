@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Nweet from '../components/Nweet';
-import { dbService } from '../fbase';
+import { dbService, storageService } from '../fbase';
+import { v4 as uuidv4 } from 'uuid';
 
 const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState('');
@@ -26,12 +27,15 @@ const Home = ({ userObj }) => {
     e.preventDefault();
     // collection: 폴더, document: 파일
     // nweets폴더에 {nweet, createdAt} 추가
-    await dbService.collection('nweets').add({
-      text: nweet,
-      createdAt: Date.now(),
-      creatorId: userObj.uid,
-    });
-    setNweet('');
+    // await dbService.collection('nweets').add({
+    //   text: nweet,
+    //   createdAt: Date.now(),
+    //   creatorId: userObj.uid,
+    // });
+    // setNweet('');
+    const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+    const response = await fileRef.putString(imageSrc, 'data_url');
+    console.log(response);
   };
   const onChange = (e) => {
     const { value } = e.target;
