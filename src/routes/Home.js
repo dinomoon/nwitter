@@ -5,6 +5,7 @@ import { dbService } from '../fbase';
 const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState('');
   const [nweets, setNweets] = useState([]);
+  const [imageSrc, setImageSrc] = useState('');
 
   useEffect(() => {
     // onSnapshot => database에 변경이 일어나면 실시간으로 알려줌
@@ -42,10 +43,13 @@ const Home = ({ userObj }) => {
     const theFile = files[0];
     const reader = new FileReader();
     reader.onloadend = (finishedEvent) => {
-      console.log(finishedEvent);
+      const { result } = finishedEvent.currentTarget;
+      setImageSrc(result);
     };
     reader.readAsDataURL(theFile);
   };
+
+  const onClearImage = () => setImageSrc('');
 
   return (
     <>
@@ -62,6 +66,10 @@ const Home = ({ userObj }) => {
           <input type="file" accept="image/*" onChange={onFileChange} />
           <input type="submit" value="Nweet" />
         </form>
+        <img src={imageSrc} alt="photo" width="50px" />
+        <button type="button" onClick={onClearImage}>
+          Clear
+        </button>
       </section>
       <section>
         <ul>
