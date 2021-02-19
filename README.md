@@ -96,3 +96,12 @@ const onSubmit = async (e) => {
   setImageSrc('');
 };
 ```
+
+### 6.2 Deploying
+
+- github 홈페이지에서 직접 deploy하는 건 익숙한데 terminal에서 직접 deploy하는 건 처음
+
+1. npm install gh-pages
+2. package.json에 "homepage": "https://dinomoon.github.io/{repositoryName}" 추가
+3. package.json에 "predeploy": "npm run build", "deploy": "gh-pages -d build" 추가
+4. npm run deploy
